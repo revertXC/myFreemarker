@@ -3,8 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <title>欢迎页面</title>
+    <#include "${request.contextPath}/bases/headCss.html"/>
 </head>
 <body>
     <h1>登录成功</h1>
+    <div>
+        <button type="button" class="btn btn-default" id="btn1">ajax发送请求 遍历结果</button>
+        <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
+        <button type="button" class="btn btn-primary" id="btn2">页面跳转FreeMarker标签遍历</button>
+        <!-- Indicates a successful or positive action -->
+        <button type="button" class="btn btn-success">（成功）Success</button>
+        <!-- Contextual button for informational alert messages -->
+        <button type="button" class="btn btn-info">（一般信息）Info</button>
+        <!-- Indicates caution should be taken with this action -->
+        <button type="button" class="btn btn-warning">（警告）Warning</button>
+        <!-- Indicates a dangerous or potentially negative action -->
+        <button type="button" class="btn btn-danger">（危险）Danger</button>
+        <!-- Deemphasize a button by making it look like a link while maintaining button behavior -->
+        <button type="button" class="btn btn-link">（链接）Link</button>
+    </div>
+    <div id="dataV" style="display: none;margin-top: 40px;">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>编号</th>
+                    <th>姓名</th>
+                    <th>性别</th>
+                </tr>
+            </thead>
+            <tbody id="tbodyData">
+
+            </tbody>
+
+        </table>
+    </div>
 </body>
+<#include "${request.contextPath}/bases/footJs.html"/>
+<script>
+    $(function(){
+
+        $("#btn1").on('click',function(){
+            var params = {};
+            $.ajax({
+                url:getUrlApiV1("user/all"),
+                type:'GET',
+                data:params,
+                success:function(res){
+                    console.log(res);
+                    if(res){
+                        if(res.code && res.code == '200'){
+                            $("#tbodyData").html("");
+                            var data = res.data;
+                            var htmlStr = "";
+                            for(v in data){
+                                v = data[v];
+                                htmlStr += '<tr>'+
+                                                '<td>'+v.id+'</td>'+
+                                                '<td>'+v.name+'</td>'+
+                                                '<td>'+v.gender+'</td>'+
+                                            '</tr>';
+                            }
+                            $("#tbodyData").html(htmlStr);
+                            $("#dataV").show();
+                        }
+                    }
+                },
+                error:function(res){
+                    /** 出现异常 进入404 页面模板*/
+                    window.location.href = "${request.contextPath}/404/template-1/404.html"
+                }
+            });
+        });
+
+        $("#btn2").on('click',function(){
+            window.location.href = getUrlModelV1("user/all");
+        })
+    });
+</script>
 </html>

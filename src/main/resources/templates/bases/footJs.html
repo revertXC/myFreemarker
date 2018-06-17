@@ -15,13 +15,24 @@
         return doRequest+pathOther;
     }
 
-    function getUrlV1(path){
+    function getUrlApiV1(path){
         var pathOther = path;
         if(pathOther){
             if(pathOther.indexOf("/") != 0){
                 pathOther = "/"+pathOther;
             }
-            pathOther = v1Path + pathOther;
+            pathOther = apiV1Path + pathOther;
+        }
+        return doRequest+pathOther;
+    }
+
+    function getUrlModelV1(path){
+        var pathOther = path;
+        if(pathOther){
+            if(pathOther.indexOf("/") != 0){
+                pathOther = "/"+pathOther;
+            }
+            pathOther = modelV1Path + pathOther;
         }
         return doRequest+pathOther;
     }

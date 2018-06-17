@@ -50,14 +50,14 @@
             params.password = $("#password").val();
             console.log(params);
             $.ajax({
-                url:getUrlV1("user/login"),
+                url:getUrlApiV1("user/login"),
                 type:'POST',
                 data:params,
                 success:function(res){
                     console.log(res);
                     if(res){
                         if(res.code && res.code == '200'){
-                            window.location.href = "${request.contextPath}/pages/index.html";
+                            window.location.href = "${request.contextPath}/weixin/skip/pages/index.html";
                         }else{
                             /**登录错误进入 404 页面 测试*/
 //                            window.location.href = "${request.contextPath}/404/template-1/404.html";

@@ -1,5 +1,7 @@
 package com.revert.utils;
 
+import com.revert.common.base.constant.CommonConstant;
+
 public class SkipUtil {
 
     /**
@@ -18,6 +20,13 @@ public class SkipUtil {
         }
         sb.append(suffix);
         return sb.toString();
+    }
+
+    public static String getDefaultPagesPath(String modelName){
+        if(modelName.startsWith("/")){
+            modelName = modelName.substring(1);
+        }
+        return SkipUtil.getPath(CommonConstant.defaultFileSuffix,CommonConstant.defaultPrefixPath+"/"+modelName);
     }
 
 

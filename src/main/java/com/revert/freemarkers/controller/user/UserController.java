@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/user")
 public class UserController {
@@ -24,7 +26,11 @@ public class UserController {
             resultData.code("500");
             return resultData;
         }
+    }
 
+    @RequestMapping("all")
+    public ResultData<List<UserModel>> getAll(){
+        return new ResultData<List<UserModel>>().data(userService.selectAll());
     }
 
 

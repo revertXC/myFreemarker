@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户列表</title>
+    <#include "${request.contextPath}/bases/headCss.html"/>
+</head>
+<body>
+    <h1>用户列表</h1>
+    <div id="dataV" style="margin-top: 40px;">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>编号</th>
+                    <th>姓名</th>
+                    <th>性别</th>
+                </tr>
+            </thead>
+            <tbody id="tbodyData">
+                <!-- <#if> <#else> 注 else 标签不闭合 </#if> -->
+                <#if userList??> <!-- 判断是否为null -->
+                    <#list userList as item>
+                        <tr>
+                            <td>${(item.id)?c}</td> <!-- ()?c 解决 freemarker 数值超过 三位 变成 如下 1,000 加上变成 1000 -->
+                            <td>${item.name ! '名字为NULL'}</td> <!-- ${xx ! 'aa}  如果 xx 为 null 则展示 ! 后面的值，建议使用的 ${} 表达式 必带 !-->
+                            <td>${item.gender !}</td>
+                        </tr>
+                    </#list>
+
+                    <#else>
+                        <tr>
+                            <td>userList 为 NULL</td>
+                            <td>userList 为 NULL</td>
+                            <td>userList 为 NULL</td>
+                        </tr>
+                    <!--</#else>-->
+                </#if>
+
+            </tbody>
+
+        </table>
+    </div>
+</body>
+<#include "${request.contextPath}/bases/footJs.html"/>
+</html>
