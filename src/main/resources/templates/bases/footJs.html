@@ -1,0 +1,31 @@
+<script src="${request.contextPath}/js/jquerys/jquery-3.3.1.js"></script>
+<#include "${request.contextPath}/bases/variable.html"/>
+<script>
+
+
+    /************************ 请求路径拼接 *********************************/
+
+    function getUrl(path){
+        var pathOther = path;
+        if(pathOther){
+            if(pathOther.indexOf("/") != 0){
+                pathOther = "/"+pathOther;
+            }
+        }
+        return doRequest+pathOther;
+    }
+
+    function getUrlV1(path){
+        var pathOther = path;
+        if(pathOther){
+            if(pathOther.indexOf("/") != 0){
+                pathOther = "/"+pathOther;
+            }
+            pathOther = v1Path + pathOther;
+        }
+        return doRequest+pathOther;
+    }
+
+    /*********************** 请求路径拼接  End**********************************/
+</script>
+

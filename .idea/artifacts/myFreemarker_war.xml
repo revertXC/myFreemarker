@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="myFreemarker:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="myFreemarker.war">
+      <element id="artifact" artifact-name="myFreemarker:war exploded" />
+    </root>
+  </artifact>
+</component>

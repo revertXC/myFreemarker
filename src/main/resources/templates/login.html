@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登陆页面</title>
+    <!-- Freemarker #include 引入 html页面 标签
+        ${request.contextPath} 请求IP
+     -->
+    <#include "${request.contextPath}/bases/headCss.html"/>
+    <link href="${request.contextPath}/css/myCustom/login.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div class="container">
+    <div class="form row">
+        <div class="form-horizontal col-md-offset-3" id="login_form">
+            <h3 class="form-title" style="color: beige">登录<span id="errorMsg" style="">账号密码错误</span></h3>
+            <div class="col-md-9">
+                <div class="form-group">
+                    <i class="fa fa-user fa-lg"></i>
+                    <input class="form-control required" type="text" placeholder="用户名" id="username" name="username" autofocus="autofocus" maxlength="20"/>
+                </div>
+                <div class="form-group">
+                    <i class="fa fa-lock fa-lg"></i>
+                    <input class="form-control required" type="password" placeholder="密码" id="password" name="password" maxlength="8"/>
+                </div>
+                <div class="form-group">
+                    <label class="checkbox">
+                        <input type="checkbox" name="remember" value="1"/>记住我
+                    </label>
+                </div>
+                <div class="form-group col-md-offset-9">
+                    <button type="submit" class="btn btn-success pull-right" name="submit" id="subLogin">登录</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+<#include "${request.contextPath}/bases/footJs.html"/>
+<script>
+    $(function(){
+        $("#username,#password").on('click',function(){
+            $("#errorMsg").hide();
+        });
+        /** ajax 登录*/
+        $("#subLogin").on('click',function(){
+            var params = {};
+            params.account = $("#username").val();
+            params.password = $("#password").val();
+            console.log(params);
+            $.ajax({
+                url:getUrlV1("user/login"),
+                type:'POST',
+                data:params,
+                success:function(res){
+                    console.log(res);
+                    if(res){
+                        if(res.code && res.code == '200'){
+                            window.location.href = "${request.contextPath}/pages/index.html";
+                        }else{
+                            /**登录错误进入 404 页面 测试*/
+//                            window.location.href = "${request.contextPath}/404/template-1/404.html";
+                            $("#errorMsg").show();
+                        }
+                    }
+                },
+                error:function(res){
+                    /** 出现异常 进入404 页面模板*/
+                    window.location.href = "${request.contextPath}/404/template-1/404.html"
+                }
+            });
+        })
+
+    });
+</script>
+
+</html>
